@@ -1,5 +1,9 @@
 <?php
 
+Route::get('link', function() {
+    Artisan::call('storage:link');
+});
+
 Route::get('/', 'WebsiteController@index');
 
 Route::get('cms/{page_id}/{slug}', 'WebsiteController@cms');
