@@ -42,7 +42,7 @@ class CompanyReportController extends Controller
             'tvde_weeks' => $tvde_weeks,
             'tvde_week_id' => $tvde_week_id,
             'drivers' => $results['drivers'],
-            'totals' => $results['totals']
+            'totals' => $results['totals'],
         ]);
 
     }
@@ -71,14 +71,6 @@ class CompanyReportController extends Controller
             $driver_balance->balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
             $driver_balance->drivers_balance = $last_balance ? $last_balance->balance + $data['final_total'] : $data['final_total'];
             $driver_balance->save();
-
-            /*
-            $email = $data['driver']['email'];
-
-            
-            Notification::route('mail', $email)
-                ->notify(new ActivityLaunchesSend());
-            */ 
 
         }
     }
