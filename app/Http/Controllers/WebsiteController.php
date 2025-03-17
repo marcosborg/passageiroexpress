@@ -9,6 +9,7 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\carRentalContact;
+use App\Models\TransferTour;
 
 class WebsiteController extends Controller
 {
@@ -58,5 +59,18 @@ class WebsiteController extends Controller
 
         Notification::route('mail', 'marcosborges@netlook.pt')
             ->notify(new carRentalContact($car_rental_contact_request));
+    }
+
+    public function transfers()
+    {
+
+        $transfer_tours = TransferTour::all();
+
+        return view('website.transfers', compact('transfer_tours'));
+    }
+
+    public function transfer($transfer_id, $slug)
+    {
+        return view('website.transfer');
     }
 }

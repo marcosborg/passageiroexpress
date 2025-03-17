@@ -5,8 +5,13 @@ Route::get('/', 'WebsiteController@index');
 Route::get('cms/{page_id}/{slug}', 'WebsiteController@cms');
 Route::get('legal/{legal_id}/{slug}', 'WebsiteController@legal');
 Route::get('rent/{car_id}/{slug}', 'WebsiteController@rent');
+Route::prefix('transfers')->group(function () {
+    Route::get('/', 'WebsiteController@transfers');
+    Route::get('transfer/{transfer_id}/{slug}', 'WebsiteController@transfer');
+});
 
-Route::prefix('forms')->group(function() {
+
+Route::prefix('forms')->group(function () {
     Route::post('rent', 'WebsiteController@formRent');
 });
 
@@ -402,7 +407,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('website-configurations/media', 'WebsiteConfigurationController@storeMedia')->name('website-configurations.storeMedia');
     Route::post('website-configurations/ckmedia', 'WebsiteConfigurationController@storeCKEditorImages')->name('website-configurations.storeCKEditorImages');
     Route::resource('website-configurations', 'WebsiteConfigurationController');
-
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
