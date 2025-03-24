@@ -167,7 +167,7 @@ trait Reports
 
             //Tool
             $tolls = 0;
-            if ($driver->tool_card) {
+            if ($driver->tool_card_id) {
                 $tolls = TollPayment::where([
                     'card' => $driver->tool_card->code,
                     'tvde_week_id' => $tvde_week_id
