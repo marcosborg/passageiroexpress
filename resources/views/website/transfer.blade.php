@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container" style="margin-top: 150px; margin-bottom: 50px;">
-    <h1 style="color: #555555; text-align: center;">Nome do Transfer</h1>
+    <h1 style="color: #555555; text-align: center;">{{ $transfer_tour->name }}</h1>
 </div>
 
 <section id="section-car-details">
@@ -11,35 +11,45 @@
         <div class="row g-5">
 
             <div class="col-lg-6">
-                <img src="https://passageiroexpress.gestvde.pt/storage/779/67d6f2026dc5e_IMG_4066.jpg" class="img-fluid">
-                <h3>Peugeot E-208<br><small></small></h3>
-                <div class="spacer-20"></div>
-                <ul>
-                    <li><br><strong>Motor: ELETRIC</strong> 136 cv</li>
-                    <li><strong>Transmissão:</strong> Manual de 5 velocidades</li>
-                    <li><strong>Autonomia : </strong>350 km</li>
-                    <li><strong>Equipamentos de Série:</strong>
-                        <ul>
-                            <li>Ar condicionado</li>
-                            <li>Sistema de infoentretenimento com ecrã tátil de 7"</li>
-                            <li>Sensores de estacionamento traseiros</li>
-                            <li>Cruise control</li>
-                        </ul>
-                    </li>
-                </ul>
+                <!-- Slider main container -->
+                <div class="swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        @foreach ($transfer_tour->photo as $photo)
+                        <div class="swiper-slide">
+                            <img src="{{ $photo->getUrl() }}" style="width: 100%;" class="img-fluid">
+                        </div>
+                        @endforeach
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                    <!-- If we need scrollbar -->
+                    <div class="swiper-scrollbar"></div>
+                </div>
+                <hr>
+                {!! $transfer_tour->description !!}
             </div>
 
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="de-price text-center">
-                            Por semana
-                            <h3>€230.00</h3>
+                            @if ($transfer_tour->under_consultation)
+                            <h3>Preço sob consulta</h3>
+                            @else
+                            <h3>€{{ $transfer_tour->price }}</h3>
+                            @endif
                         </div>
                         <div class="spacer-30"></div>
                         <div class="de-box mb25">
-                            <form action="/forms/rent" method="post" id="rent">
-                                <input type="hidden" name="_token" value="s5AuOAMimyFGXHTuZ6eveCL4zJlSVdbMnGsX58Zt"> <input type="hidden" name="car_id" value="9">
+                            <form action="/forms/transfer" method="post" id="rent">
+                                @csrf
                                 <h4>Pedido de contacto</h4>
                                 <div class="spacer-20"></div>
                                 <div class="row">
@@ -56,28 +66,8 @@
                                         <input type="email" name="email" placeholder="" class="form-control" required="">
                                     </div>
                                     <div class="col-lg-12 mb20">
-                                        <h5>Cidade *</h5>
-                                        <input type="text" name="city" placeholder="" class="form-control" required="">
-                                    </div>
-                                    <div class="col-lg-12 mb20">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-check">
-                                                    <input type="hidden" name="tvde" value="0">
-                                                    <input class="form-check-input" type="checkbox" value="1" id="tvde" name="tvde" style="border: solid 1px #999;">
-                                                    <label class="form-check-label" for="tvde">
-                                                        Tem cartão TVDE?
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" name="tvde_card" placeholder="Indique o n.º" class="form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 mb20">
                                         <h5>Mensagem</h5>
-                                        <textarea name="message" placeholder="" class="form-control"></textarea>
+                                        <textarea name="message" placeholder="" class="form-control">Pretendo ser contactado para o tour/transfer {{ $transfer_tour->name }}.</textarea>
                                     </div>
                                     <div class="col-lg-12 mb20">
                                         <div class="form-check">
@@ -100,4 +90,41 @@
         </div>
     </div>
 </section>
+@endsection
+@section('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    .swiper {
+        width: 600px;
+        height: 400px;
+    }
+
+</style>
+@endsection
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        direction: 'horizontal'
+        , loop: true,
+
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination'
+        , },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next'
+            , prevEl: '.swiper-button-prev'
+        , },
+
+        // And if we need scrollbar
+        scrollbar: {
+            el: '.swiper-scrollbar'
+        , }
+    , });
+
+</script>
 @endsection

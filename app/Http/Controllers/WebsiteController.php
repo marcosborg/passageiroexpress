@@ -71,6 +71,9 @@ class WebsiteController extends Controller
 
     public function transfer($transfer_id, $slug)
     {
-        return view('website.transfer');
+
+        $transfer_tour = TransferTour::find($transfer_id);
+
+        return view('website.transfer', compact('transfer_tour'));
     }
 }

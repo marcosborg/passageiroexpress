@@ -27,7 +27,7 @@
                                                     @else
                                                     <span>€{{ $transfer_tour->price }}</span>
                                                     @endif
-                                                    <a class="btn-main" href="/rent/7/tesla-model-3-performance">Saber mais</a>
+                                                    <a class="btn-main" href="/transfers/transfer/{{ $transfer_tour->id }}/{{ Str::slug($transfer_tour->name) }}">Saber mais</a>
                                                 </div>
                                             </div>
                                         </div>
